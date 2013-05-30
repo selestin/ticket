@@ -18,7 +18,8 @@ include('include.php');
                         	<tr>
                	      <td><font size="+1">Hi <?php echo ucfirst($_SESSION['name']); ?></font></td></tr>
                             <tr><td>Followed Tickets (<?php echo get_count_tickets($_SESSION['id']) ?>)  </td></tr>
-                            <tr><td>&nbsp;</td></tr>
+                            <tr> 
+                              <td><a href="addnewspace.php">Add New Space</a> <!--onclick="openWin('addnewspace.php')"--></td></tr>
                         </table>
                     </td>
               	   </tr>

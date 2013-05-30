@@ -42,6 +42,14 @@ if($asignto == '')
 tinymce.init({
     selector: "textarea"
  });
+
+function openWin(url)
+{	//myWindow=window.open(windowname,'','scrollbars=yes,menubar=yes,resizable=yes,left=30,top=30,height=500,width=650');
+	//myWindow.document.write("<p>This is 'myWindow'</p>");
+	//myWindow.focus();
+	popupWindow = window.open(
+        url,'popUpWindow','height=400,width=400,left=10,top=10,resizable=no,scrollbars=no,toolbar=no,menubar=no,location=no,directories=no,status=no')
+}
 </script>
 
 <!-- TINY MCE END -->

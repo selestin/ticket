@@ -1,0 +1,12 @@
+ALTER TABLE `user` ADD `lname` VARCHAR( 50 ) NOT NULL AFTER `name` 
+
+ALTER TABLE `user` ADD `activationtime` INT( 50 ) NOT NULL AFTER `type` 
+
+CREATE TABLE `ticket_system`.`user_type` (
+`id` int( 11 ) NOT NULL AUTO_INCREMENT ,
+`name` varchar( 21 ) NOT NULL ,
+`status` tinyint( 4 ) NOT NULL ,
+PRIMARY KEY ( `id` )
+) ENGINE = InnoDB DEFAULT CHARSET = latin1;
+
+user_type

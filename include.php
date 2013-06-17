@@ -2,11 +2,18 @@
 include("connectivity.php");
 
 # TICKETS
-function get_all_tickets($addon=''){
-	if($addon)
-		$addon = " WHERE assignto = '$addon'";
+
+function get_all_tickets($assignto='',$project_id=''){
 	
-	return $query = mysql_query("SELECT * FROM ticket $addon");
+	$addon = 1;
+	if($assignto)
+		$addon = " WHERE assignto = '$assignto'";
+	if($project_id)
+		$addon = " WHERE project_id = '$project_id'";	
+	
+	if($assignto!='' && $project_id!='')
+		$addon = " WHERE project_id = '$project_id' AND assignto = '$assignto'";	
+	return $query = mysql_query("SELECT * FROM ticket  $addon");
 	
 }
 
@@ -41,9 +48,10 @@ function status_selectbox($id){
 	return $options;					
 	}
 
-function get_count_tickets($userid){
-	
-	$query = mysql_query("SELECT * FROM ticket WHERE assignto ='$userid'");
+function get_count_tickets($userid,$project_id=''){
+	if($project_id!='')
+		$addon = "AND project_id = '".$project_id."'";
+	$query = mysql_query("SELECT * FROM ticket WHERE assignto ='$userid' $addon ");
 	return mysql_num_rows($query);
 	}	
 
@@ -57,7 +65,7 @@ function get_selectbox($id,$table='ticket_status'){
 	}
 
 function get_select_name($table,$id){
-	$query = mysql_query("SELECT * FROM ".$table." WHERE id ='".$id."'");
+	$query = mysql_query("SELECT * FROM ".$table." WHERE id ='".$status."'");
 	$row   = mysql_fetch_array($query);
 	return $row['name'];
 	}
@@ -65,6 +73,43 @@ function get_select_name($table,$id){
 
 
 # USERS
+function AddNewUser(){
+	
+	$name 		= $_REQUEST['name'];
+	$lname		= $_REQUEST['lname'];
+	$email		= $_REQUEST['email'];
+	$password	= $_REQUEST['password'];
+	$type 		= $_REQUEST['type'];
+	$edit_id    = $_REQUEST['edit_id'];
+	
+	$activationtime = time();
+	if(isset($edit_id)){
+		
+		mysql_query("UPDATE user SET 
+					name = '".$name."', 
+					lname= '".$lname."',
+					email= '".$email."',
+					password= '".$password."',
+					type= '".$type."' WHERE id = ".$edit_id."");
+		}
+	else
+	
+	mysql_query("INSERT INTO `user` (
+				`id` ,
+				`name` ,
+				`lname` ,
+				`email` ,
+				`password` ,
+				`type` ,
+				`activationtime`
+				)
+				VALUES (
+				NULL , '".$name."', '".$lname."', '".$email."', '".$password."', '".$type."', '".$activationtime."'
+				);
+				
+				");
+	
+	}
 function get_users_list($id=0){
 	$query = mysql_query("SELECT * FROM user");
 	while($row = mysql_fetch_array($query)){
@@ -88,7 +133,12 @@ function get_useremail($id){
 	return $row['email'];
 	
 	}	
-	
+function ListAllUsers(){
+	return mysql_query("SELECT * FROM user");
+	}
+function GetUserDetails($user_id){
+	return mysql_query("SELECT * FROM user WHERE id=".$user_id."");
+	}	
 
 # PROJECT
 
@@ -97,4 +147,53 @@ function get_projectname($id){
 	$row   = mysql_fetch_array($query);
 	return $row['project_name'];
 	}
+function AddNewProject(){
+	$project_name   = $_REQUEST['project_name'];
+	$startdate	    = $_REQUEST['startdate'];
+	$enddate  		= $_REQUEST['enddate'];
+	$details  	    = $_REQUEST['details'];
+	$deliverydate  	= $_REQUEST['deliverydate'];
+	$edit_id        = $_REQUEST['edit_id'];
+	
+	
+	if(isset($edit_id)){
+		mysql_query("UPDATE project SET 
+				project_name = '".$project_name."',
+				startdate    = '".$startdate."' ,
+				enddate      = '".$enddate."' ,
+				details      = '".$details."' ,
+				deliverydate = '".$deliverydate."'  WHERE id =".$edit_id."");
+		
+		
+
+		
+		}
+	else	
+		mysql_query("INSERT INTO  `project` (
+				`id` ,
+				`project_name` ,
+				`startdate` ,
+				`enddate` ,
+				`details` ,
+				`deliverydate`
+				)
+				VALUES (
+				NULL ,  '".$project_name."',  '".$startdate."',  '".$enddate ."',  '".$details."',  '".$deliverydate."'
+				);
+				");
+	}	
+function GetAllProjeccts($id=''){
+	
+	if($id!='')
+		$addon = 'WHERE id ='.$id;
+	return $query = mysql_query("SELECT * FROM project ".$addon."");
+	/*while($row   = mysql_fetch_array($query)){
+		echo '<li>'.$row['project_name'].'</li>';
+		}*/
+	}	
+function GetProjectDetails(){
+	
+	
+	
+	}	
 ?>

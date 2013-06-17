@@ -9,11 +9,11 @@ include('include.php');
 
 ?>
     <div id="content">
-        <div id="archdev-navbar">
+        
           <div id="pkglist-about2" class="box">
-            <table><tr>
-            		<td width="9%" align="center"><img  align="middle"src="images/no-picture-hover.png"></td>
-                    <td width="91%">
+            <table width="97%"><tr>
+            		<td width="8%" align="center"><img  align="middle"src="images/no-picture-hover.png"></td>
+                    <td width="17%">
                     	<table>
                         	<tr>
                	      <td><font size="+1">Hi <?php echo ucfirst($_SESSION['name']); ?></font></td></tr>
@@ -22,9 +22,32 @@ include('include.php');
                               <td><a href="addnewspace.php">Add New Space</a> <!--onclick="openWin('addnewspace.php')"--></td></tr>
                         </table>
                     </td>
+                    <td width="75%" align="center" valign="top"> <strong>Spaces you are get Involved</strong>
+          
+                    
+                    
+                    <style>
+					ul.a {list-style-type:circle;}
+					ul.b {list-style-type:square; !Important}
+					ol.c {list-style-type:upper-roman;}
+					ol.d {list-style-type:lower-alpha;}
+					</style>
+                  
+						<table >
+						<?php 
+						$query = GetAllProjeccts(); 
+						while($row = mysql_fetch_array($query)){
+							
+							echo '<tr><td width="20%">
+											<a href="listticket_projectwise.php?id='.$row['id'].'">'.$row['project_name'].'('.get_count_tickets($_SESSION['id'],$row['id']).')</a></td><td  align="left" width="80%">
+											<a href="addnewspace.php?id='.$row['id'].'">Edit</a></td></tr>';
+						}
+				?>
+                		</table>
+                     </td>
               	   </tr>
             </table>
-          </div>
+   
             
         </div>
         

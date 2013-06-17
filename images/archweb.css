@@ -359,7 +359,6 @@ div#archdev-navbar {
     }
 
     div#archdev-navbar li {
-        display: inline;
         margin: 0;
         padding: 0;
         font-size: 0.9em;

@@ -42,17 +42,23 @@ if($asignto == '')
 tinymce.init({
     selector: "textarea"
  });
-
-function openWin(url)
-{	//myWindow=window.open(windowname,'','scrollbars=yes,menubar=yes,resizable=yes,left=30,top=30,height=500,width=650');
-	//myWindow.document.write("<p>This is 'myWindow'</p>");
-	//myWindow.focus();
-	popupWindow = window.open(
-        url,'popUpWindow','height=400,width=400,left=10,top=10,resizable=no,scrollbars=no,toolbar=no,menubar=no,location=no,directories=no,status=no')
-}
-</script>
-
 <!-- TINY MCE END -->
+<!-- POPUP-->
+	function openWin(url)
+	{	//myWindow=window.open(windowname,'','scrollbars=yes,menubar=yes,resizable=yes,left=30,top=30,height=500,width=650');
+		//myWindow.document.write("<p>This is 'myWindow'</p>");
+		//myWindow.focus();
+		popupWindow = window.open(
+			url,'popUpWindow','height=400,width=400,left=10,top=10,resizable=no,scrollbars=no,toolbar=no,menubar=no,location=no,directories=no,status=no')
+	}
+	
+</script>
+<!--CALEDER -->
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+  <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+  <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+  <link rel="stylesheet" href="/resources/demos/style.css" />
+
 </head>
 <body class="">
   
@@ -62,6 +68,7 @@ function openWin(url)
         	<table><tr >
             		<td width="9%"><a href="listticket.php"><font style="font:Verdana, Geneva, sans-serif; color:#FFF;font-size: 0.812em;">Home</font></a></td>
                     <td width="18%"><a href="newticket.php"><font style="font:Verdana, Geneva, sans-serif; color:#FFF;font-size: 0.812em;">Add new ticket</font></a></td>
+                    <td width="18%"><a href="addnewuser.php"><font style="font:Verdana, Geneva, sans-serif; color:#FFF;font-size: 0.812em;">Manage Users</font></a></td>
                     <td width="73%"><a href="logout.php"><font style="font:Verdana, Geneva, sans-serif; color:#FFF;font-size: 0.812em;">Log Out</font></a></td>
                     </tr></table>
             <?php } ?>        

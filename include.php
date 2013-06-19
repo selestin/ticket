@@ -59,13 +59,13 @@ function get_count_tickets($userid,$project_id=''){
 function get_selectbox($id,$table='ticket_status'){
 	$query = mysql_query("SELECT * FROM $table");
 		while($row = mysql_fetch_array($query)){
-			$options .= '<option  value="1" '.($row['id']== $id ? 'selected' : '').'>'.$row['name'].'</option>';
+			$options .= '<option  value="'.$row['id'].'" '.($row['id']== $id ? 'selected' : '').'>'.$row['name'].'</option>';
 		}
 	return $options;					
 	}
 
 function get_select_name($table,$id){
-	$query = mysql_query("SELECT * FROM ".$table." WHERE id ='".$status."'");
+	$query = mysql_query("SELECT * FROM ".$table." WHERE id ='".$id."'");
 	$row   = mysql_fetch_array($query);
 	return $row['name'];
 	}
@@ -157,6 +157,14 @@ function AddNewProject(){
 	
 	
 	if(isset($edit_id)){
+		
+		echo "UPDATE project SET 
+				project_name = '".$project_name."',
+				startdate    = '".$startdate."' ,
+				enddate      = '".$enddate."' ,
+				details      = '".$details."' ,
+				deliverydate = '".$deliverydate."'  WHERE id =".$edit_id."";
+				exit;
 		mysql_query("UPDATE project SET 
 				project_name = '".$project_name."',
 				startdate    = '".$startdate."' ,

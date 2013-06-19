@@ -12,7 +12,11 @@ if(isset($_POST['submit']))
  //$email=trim($_POST['email']);
 // $pass=trim($_POST['password']);
 
+<<<<<<< HEAD
 //hai selestin
+=======
+//sfdsdfsfsfsdfsf
+>>>>>>> 91abfa0acc3dbb1db5d50e185757580ea109fde4
 	$sql= "SELECT * FROM user where email='$email' AND password='$pass'";
 	$result = mysql_query($sql);
 	$var = mysql_fetch_array($result);

@@ -1,4 +1,7 @@
 <?php
+/*
+Index file to load first
+*/
 header('Location:listticket.php');
 // Test
 	/*session_start();

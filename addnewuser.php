@@ -63,7 +63,7 @@ if((isset($_REQUEST['id']))){
 								<td><a href=addnewuser.php?id='.$row['id'].'>'.($row['lname']).'</a></td>
                                 <td><a href=addnewuser.php?id='.$row['id'].'>'.$row['email'].'</a></td>
 								<td><a href=addnewuser.php?id='.$row['id'].'>'.$row['password'].'</a></td>
-								<td><a href=addnewuser.php?id='.$row['id'].'>'.get_select_name('user_type',$row['type']).'</a></td>
+								<td><a href=addnewuser.php?id='.$row['id'].'>'.get_select_name('user_type',$row['type']).$row['type'].'</a></td>
                                 <td><a href=addnewuser.php?id='.$row['id'].'>'.date('Y-m-d H:i:s',$row['activationtime']).'</a></td>
 								<td><a href=addnewuser.php?id='.$row['id'].'>Edit</a></td>
                                </tr>';

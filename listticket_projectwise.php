@@ -1,49 +1,68 @@
 <?php 
-include('header.php');
 include('include.php');
+include('header.php');
+
 #HEADER		
 	if(isset($_REQUEST['search'])){
 		 $asignto = $_REQUEST['searchby_user'];
 	}else
 		 $asignto = $_SESSION['id']; 
 
-	$project_id = $_REQUEST['id'];
+	$project_id = $_REQUEST['project_id'];
+	if(isset($project_id)){
+	
+	$_SESSION['project_id'] = $project_id ;
+	}
+	$session_project_id     = $_SESSION['project_id'];
 ?>
     <div id="content">
+     <div id="archdev-navbar">
       <div id="pkglist-search" class="box filter-criteria">
 
-    <h2>Search Tickets</h2>
+	<table width="100%"><tr>
+     <td width="346">  <h2>Manage Project: (<?php echo get_projectname($session_project_id) ?>)</h2></td>
+     <td width="925"> <img src="images/ico-add.png" /><a href="newticket.php"><font style="font:Verdana, Geneva, sans-serif; font-size: 12px;">Add new ticket</font></a></td>
+    </tr></table>
+    
+   
+   
 
-   <!-- <h3>Package Search</h3>-->
-
-    <form id="pkg-search" method="get" action="">
-        <fieldset>
-            <legend>Enter search criteria</legend>
-        
-           <div>
-                <label for="id_q" title="Enter keywords as desired">
-                    Keywords</label><input id="id_q" type="text" name="q" size="30"></div>
-           <div>
-                <label for="id_maintainer" title="Limit results to a specific maintainer">
-                    Assigned to</label><select name="searchby_user" id="id_maintainer">
-                                       <?php 
-									   			  if($_SESSION['user_type'] !=0)
-									   get_users_list(); ?>
-                                        </select></div>
-			<?php   if($_SESSION['user_type'] !=0) { ?>
-            <div><label>&nbsp;</label><input title="Search for tickets using this criteria" type="submit" name="search" value="Search"></div>
-            
-            <?php } ?>
-        </fieldset>
-    </form>
+  
 
 </div><!-- #pkglist-search -->
+</div>
 
 
 <div id="pkglist-results" class="box">
     <div class="pkglist-stats">
     
-    <p>Ticket List.</p>
+   <table width="52%"><tr><td width="500"> <font size="4">Ticket List.</font></td><td> <!-- <h3>Package Search</h3>-->
+
+    <form id="pkg-search" method="get" action="">
+     <fieldset>
+    	<table width="480"><td width="94"><legend>Enter search criteria</legend></td>
+        		<td width="198">           <div style="float:left; margin-top:-8px;">
+                <label for="id_q" title="Enter keywords as desired">
+                    Keywords<br /></label><input id="id_q" type="text" name="q" size="30"></div></td>
+                <td width="63">  <div style="float:left; margin-top:-8px;">
+                <label for="id_maintainer" title="Limit results to a specific maintainer">
+                    Assigned to</label><br /><select name="searchby_user" id="id_maintainer">
+                                       <?php 
+									   			  if($_SESSION['user_type'] !=0)
+									   get_users_list(); ?>
+                                        </select></div></td>
+                <td width="80"><?php   if($_SESSION['user_type'] !=0) { ?>
+            <label>&nbsp;</label><input title="Search for tickets using this criteria" type="submit" name="search" value="Search">
+            
+            <?php } ?></td></table>
+       
+            
+        
+
+         
+			
+        </fieldset>
+    </form></td></tr></table>
 
     <div class="pkglist-nav">
       <!--  <span class="prev">
@@ -62,7 +81,7 @@ include('include.php');
 
     <form id="pkglist-results-form" method="post" action="#"><div style="display:none"><input type="hidden" name="csrfmiddlewaretoken" value="dLvm7ouB5Gk8QjvfJD6ww1wcWWFkRFEE"></div>
 
-        <table class="results">
+<table class="results">
             <thead>
                 <tr >
                     

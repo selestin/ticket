@@ -12,11 +12,7 @@ if(isset($_POST['submit']))
  //$email=trim($_POST['email']);
 // $pass=trim($_POST['password']);
 
-<<<<<<< HEAD
-//hai selestin
-=======
-//sfdsdfsfsfsdfsf
->>>>>>> 91abfa0acc3dbb1db5d50e185757580ea109fde4
+
 	$sql= "SELECT * FROM user where email='$email' AND password='$pass'";
 	$result = mysql_query($sql);
 	$var = mysql_fetch_array($result);
@@ -25,7 +21,7 @@ if(isset($_POST['submit']))
 	$_SESSION['id']   		 = $var['id'];	
 	$_SESSION['user_type']   = $var['type'];
  
-	$feildName="email Field is required";
+	$feildName ="Email Field is required";
 	$feildName1="Password Field is required";
 	$feildName2="Enter Correct email";
 	$feildName3="Enter Correct password";
@@ -101,16 +97,16 @@ if($pass=='')
 
 <link rel="stylesheet" type="text/css" href="images/widgets.css">
 <link rel="stylesheet" type="text/css" href="css/style.css">
+<link rel="stylesheet" type="text/css" href="css/custom.css">
 <link rel="alternate" type="application/rss+xml" title="Arch Linux Package Updates" href="http://www.archlinux.org/feeds/packages/">
 
 
 </head>
 <body class="">
   
-        <table bgcolor="#333333">
-        <tr><td><h2><a href="#" title="Return to the main page">Ticket System</a></h2></td>
-        <td>
-        </td></tr></table>
+        <table bgcolor="#3B5A9B">
+       	 <tr><td><a href="#" title="Return to the main page"><font color="#FFFFFF" size="+3">Ticket System</font></a></td></tr>
+        </table>
 
 <div id="content">
 <div id="archdev-navbar">
@@ -118,32 +114,33 @@ if($pass=='')
 <form id="form1" name="form1" method="POST" action="login.php"><br />
 
 
-  <table width="50%" border="0" cellspacing="0" cellpadding="0">
+  <table width="44%" border="0" cellspacing="0" cellpadding="0">
     <tr>
      
       <td align="center"  class="boxcolor" height="150px;">
 	  <div align="center">
         <table width="70%" border="0" align="center" >
+       
+		  <tr><td colspan="2"><h3>Login</h3></td></tr>
           <tr>
-		  <tr><td><h3>Login</h3></td></tr>
-            <td><b>User Name</b></td>
-            <td><input name="email" type="text" id="email"  class="textbox"/></td>
+            <td width="15%"><b>User Name</b></td>
+            <td width="85%"><input name="email"  type="text" id="email"  class="inputtext16"/></td>
 			<?php if( isset($_POST['submit']) )
 					{ echo $errmsg;
 					}?> 
-
           </tr>
+          <tr><td colspan="2" height="10"></td></tr>
           <tr>
             <td><b>Password</b></td>
-            <td><input name="password" type="password" id="password" class="textbox"/></td>
+            <td><input name="password" type="password" id="password" class="inputtext16"/></td>
 			<?php if( isset($_POST['submit']) )
 					{ echo $errmsg1;
 					}?> 
 
           </tr>
+              <tr><td colspan="2" height="10"></td></tr>
           <tr>
-		  <td></td>
-            <td><input align="center" name="submit" type="submit"  value="submit"  class="button" /></td>
+		  <td></td><td><input align="center" name="submit" type="submit"  value="submit"  class="button-link" /></td>
           </tr>
         </table></div></td>
      

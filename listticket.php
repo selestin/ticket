@@ -1,59 +1,77 @@
 <?php 
-include('header.php');
 include('include.php');
+include('header.php');
+
 #HEADER		
 	if(isset($_REQUEST['search'])){
 		 $asignto = $_REQUEST['searchby_user'];
 	}else
 		 $asignto = $_SESSION['id']; 
 
+$user_id = $_SESSION['id'];
 ?>
+
     <div id="content">
+    	<div id="archdev-navbar">
         
           <div id="pkglist-about2" class="box">
             <table width="97%"><tr>
             		<td width="8%" align="center"><img  align="middle"src="images/no-picture-hover.png"></td>
-                    <td width="17%">
+                    <td width="17%" >
+                    	<div style="padding: 3px 5px 0px 17px;">
                     	<table>
-                        	<tr>
-               	      <td><font size="+1">Hi <?php echo ucfirst($_SESSION['name']); ?></font></td></tr>
-                            <tr><td>Followed Tickets (<?php echo get_count_tickets($_SESSION['id']) ?>)  </td></tr>
-                            <tr> 
-                              <td><a href="addnewspace.php">Add New Space</a> <!--onclick="openWin('addnewspace.php')"--></td></tr>
+                        	<tr><td><font size="+1">Hi <?php echo ucfirst($_SESSION['name']); ?></font></td></tr>
+                            <tr><td><img style="float: left;padding: 3px 5px 0px 0px;" src="images/follow.png" />
+                            		Followed Tickets (<?php echo get_count_tickets($_SESSION['id']) ?>)  </td></tr>
+                            <?php if(GetUserPermisionStatus($_SESSION['id'],$id=4)==1)
+							echo '<tr><td><img src="images/newspace.png" style="float: left;padding: 3px 5px 0px 0px;" >
+							<a href="addnewspace.php">Add New Project</a></td></tr>';
+							?>
+                            
                         </table>
+                        </div>
                     </td>
-                    <td width="75%" align="center" valign="top"> <strong>Spaces you are get Involved</strong>
+                    <td width="75%" align="center" valign="top"> <strong>Projects you are get Involved</strong>
           
                     
                     
-                    <style>
+                      <style>
 					ul.a {list-style-type:circle;}
 					ul.b {list-style-type:square; !Important}
 					ol.c {list-style-type:upper-roman;}
 					ol.d {list-style-type:lower-alpha;}
 					</style>
-                  
-						<table >
-						<?php 
-						$query = GetAllProjeccts(); 
-						while($row = mysql_fetch_array($query)){
-							
-							echo '<tr><td width="20%">
-											<a href="listticket_projectwise.php?id='.$row['id'].'">'.$row['project_name'].'('.get_count_tickets($_SESSION['id'],$row['id']).')</a></td>
-											<td  align="left" width="80%">
-											<a href="addnewspace.php?id='.$row['id'].'">Edit</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a target="blank" href="viewscope.php?id='.$row['id'].'">View</a></td></tr>';
-						}
-				?>
-                		</table>
-                     </td>
-              	   </tr>
-            </table>
+              
+                    <table >
+                    <?php 
+                    $query = GetAllProjeccts(); 
+                    while($row = mysql_fetch_array($query)){
+                    $projects = '<tr><td width="20%"><img src="images/task.png">
+                        <a href="listticket_projectwise.php?project_id='.$row['id'].'">'.$row['project_name'].'('.get_count_tickets($_SESSION['id'],$row['id']).')</a></td>
+                            <td  align="left" width="80%">';
+                            
+                            if(GetUserPermisionStatus($user_id,$id=2)==1)	
+                                $projects .='<img src="images/viewjob.png"><a target="blank" href="viewscope.php?id='.$row['id'].'">View Scope</a>&nbsp;&nbsp;|&nbsp;&nbsp;';
+							if(GetUserPermisionStatus($user_id,$id=3)==1)
+                                $projects .='<img src="images/editjob.png"><a href="addnewspace.php?id='.$row['id'].'">Edit</a>&nbsp;&nbsp;|&nbsp;&nbsp;';	
+                                
+                                $projects .='<img src="images/tracktime.png"><a target="blank" href="tracktime.php?id='.$row['id'].'">&nbsp;Track Time</a>';
+                                
+                                $projects .= '</td></tr>';
+                        echo 	$projects;	
+                    }
+          		    ?>
+                    </table>
+                 </td>
+               </tr>
+        </table>
    
             
         </div>
+        </div>
         
         
-<div id="pkglist-search" class="box filter-criteria">
+<?php /*?><div id="pkglist-search" class="box filter-criteria">
 
     <h2>Search Tickets</h2>
 
@@ -107,13 +125,13 @@ include('include.php');
         </fieldset>
     </form>
 
-</div><!-- #pkglist-search -->
+</div><?php */?><!-- #pkglist-search -->
 
 
 <div id="pkglist-results" class="box">
     <div class="pkglist-stats">
     
-    <p>Ticket List.</p>
+    <p>Followed Tickets  List.</p>
 
     <div class="pkglist-nav">
       <!--  <span class="prev">

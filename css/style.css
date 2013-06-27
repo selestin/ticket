@@ -2164,7 +2164,7 @@ div.document fieldset {
 	background:-ms-linear-gradient(top,#25A6E1 0%,#188BC0 100%);
 	background:linear-gradient(top,#25A6E1 0%,#188BC0 100%);
 	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#25A6E1',endColorstr='#188BC0',GradientType=0);
-	padding:8px 13px;
+/*	padding:8px 13px;*/
 	color:#fff;
 	font-family:Arial, Helvetica, sans-serif,sans-serif;
 	font-size:16px;

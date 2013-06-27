@@ -1,7 +1,10 @@
 <?php
-include('header.php');
 include('include.php');
+include('header.php');
+
 include('include/mailclass.php');
+
+
 
 $user_id = $_SESSION['id'];
     $id = $_REQUEST['id'];
@@ -15,7 +18,7 @@ if(isset($_REQUEST['addcomments'])){
 	//$file		 = $_REQUEST['file'];
 	$comment     = $_REQUEST['comment'];
 	$ticket_id	 = $_REQUEST['ticket_id'];
-
+	$worktime    = $_REQUEST['worktime'];
 	$date 		 = time();
 	
 	move_uploaded_file($_FILES["file"]["tmp_name"],"upload/" . $_FILES["file"]["name"]);
@@ -27,10 +30,11 @@ if(isset($_REQUEST['addcomments'])){
 					`addedby` ,
 					`date` ,
 					`comment` ,
-					`attachement`
+					`attachement`,
+					`worktime`
 					)
 					VALUES (
-					NULL,  '".$ticket_id."' ,  '".$user_id."',  '".$date."',  '".$comment."',  '".$_FILES["file"]["name"]."'
+					NULL,  '".$ticket_id."' ,  '".$user_id."',  '".$date."',  '".$comment."',  '".$_FILES["file"]["name"]."',  '".$worktime."'
 					);");
 	}
 
@@ -50,7 +54,7 @@ if(isset($_REQUEST['addticket'])){
 
 	$date = time();
         move_uploaded_file($_FILES["file"]["tmp_name"],"upload/" . $_FILES["file"]["name"]);
-	$project_id     = 1;
+	$project_id     = $_SESSION['project_id'];
 	$workedhours    = $_REQUEST['workedhours'];
 	$estimatedtime  = $_REQUEST['estimatedtime'];
 	$status 		= $_REQUEST['status'];
@@ -87,7 +91,7 @@ if(isset($_REQUEST['addticket'])){
 									   '".$milestone."',
 									   '".$permission_type."',
 									   '".$title."',
-								           '".$description."',
+								       '".$description."',
                                                                            '".$_FILES["file"]["name"]."');");
 									   
 		//addNewTicket();							   
@@ -355,7 +359,7 @@ if(isset($_REQUEST['addticket'])){
 																			<?php get_users_list($row_tickethead['assignto']); ?>
             		  																</select>
             					  </td>
-                                                     <td>Worked Hours<br /><input type="text" name="workedhours"  style="width:50px;"/></td>
+                                                     <td>Worked Hours<br /><input type="text" name="worktime"  style="width:50px;"/></td>
                                                     
                                                     <td><input type="file" name="file"  /></td> <td width="9%"><input type="submit" name="addcomments" value="Submit" /></td></tr>
                                                 </table>

@@ -1,18 +1,3 @@
-<?php 
-//error_reporting(0);
-session_start();
-if(isset($_SESSION['id'])){
-	$sessionid = $_SESSION['id'];
-	}
-else{
-	header("Location:login.php");
-	$sessionid ='';
-	}
-
-/*$asignto = $_SESSION['id'];
-if($asignto == '')
-	header("Location:login.php");*/
-?>
 <!DOCTYPE html>
 <!--http://www.archlinux.org/packages/update/-->
 <!-- saved from url=(0034)http://www.archlinux.org/packages/ -->
@@ -32,7 +17,8 @@ if($asignto == '')
 
 <link rel="stylesheet" type="text/css" href="images/widgets.css">
 <link rel="stylesheet" type="text/css" href="css/style.css">
-<link rel="alternate" type="application/rss+xml" title="Arch Linux Package Updates" href="http://www.archlinux.org/feeds/packages/">
+<link rel="stylesheet" type="text/css" href="css/custom.css">
+
 
 
 
@@ -40,9 +26,11 @@ if($asignto == '')
 <script type="text/javascript" src="tinymce/tinymce.min.js"></script>
 <script type="text/javascript">
 tinymce.init({
-    selector: "textarea"
+    selector: "textarea",
+	width : 500
  });
 <!-- TINY MCE END -->
+
 <!-- POPUP-->
 	function openWin(url)
 	{	//myWindow=window.open(windowname,'','scrollbars=yes,menubar=yes,resizable=yes,left=30,top=30,height=500,width=650');
@@ -62,14 +50,24 @@ tinymce.init({
 </head>
 <body class="">
   
-        <table bgcolor="#333333">
-        <tr><td><h2><a href="#" title="Return to the main page">Ticket System</a></h2></td>
-        <td><?php if(isset($_SESSION['id'])) { ?>
-        	<table><tr >
-            		<td width="9%"><a href="listticket.php"><font style="font:Verdana, Geneva, sans-serif; color:#FFF;font-size: 0.812em;">Home</font></a></td>
-                    <td width="18%"><a href="newticket.php"><font style="font:Verdana, Geneva, sans-serif; color:#FFF;font-size: 0.812em;">Add new ticket</font></a></td>
-                    <td width="18%"><a href="addnewuser.php"><font style="font:Verdana, Geneva, sans-serif; color:#FFF;font-size: 0.812em;">Manage Users</font></a></td>
-                    <td width="73%"><a href="logout.php"><font style="font:Verdana, Geneva, sans-serif; color:#FFF;font-size: 0.812em;">Log Out</font></a></td>
+        <table bgcolor="#3B5A9B">
+        <tr><td width="22%"><a href="#" title="Return to the main page"><font color="#FFFFFF" size="+3">Ticket System</font></a></td>
+        <td width="78%"><?php if(isset($_SESSION['id'])) { ?>
+        	<table><tr>
+            		<td width="10%" valign="middle"><a href="listticket.php"><font style="font:Verdana, Geneva, sans-serif; color:#FFF;font-size: 0.812em;">
+                    <img style="float: left; margin: 5px 5px 0px 0px;" src="images/Home-icon.png" align="bottom">Home</font></a></td>
+                    <?php 
+					if(GetUserPermisionStatus($_SESSION['id'],$id=1)==1)
+					echo '<td width="18%"><img src="images/User-Clients-icon.png" style="float: left; margin: 4px 5px 5px 0px;"><a href="addnewuser.php"><font style="font:Verdana, Geneva, sans-serif; color:#FFF;font-size: 0.812em;">Manage Users</font></a></td>';
+					?>
+                    
+                    <td width="50%"><img style="float: left;padding: 3px 5px 0px 0px;" src="images/logout.png"><a href="logout.php"><font style="font:Verdana, Geneva, sans-serif; color:#FFF;font-size: 0.812em;">Log Out</font></a></td>
+                    
+                    <td width="35%"><font color="#FFFFFF">Search&nbsp;</font><input type="text" name="search" class="inputtext16" style="height:20px;" ></td>
+                    <td width="25%" align="left"><select name="projectname">
+                    	<option  >Select Project</option>
+                    </select></td>
+                    
                     </tr></table>
             <?php } ?>        
         </td></tr></table>

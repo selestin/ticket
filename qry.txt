@@ -10,3 +10,6 @@ PRIMARY KEY ( `id` )
 ) ENGINE = InnoDB DEFAULT CHARSET = latin1;
 
 user_type
+---------------------------
+
+ALTER TABLE  `user` ADD  `parent` INT( 21 ) NOT NULL

@@ -1,4 +1,18 @@
 <?php
+//error_reporting(0);
+session_start();
+if(isset($_SESSION['id'])){
+	$sessionid = $_SESSION['id'];
+	}
+else{
+	header("Location:login.php");
+	$sessionid ='';
+	}
+
+/*$asignto = $_SESSION['id'];
+if($asignto == '')
+	header("Location:login.php");*/
+
 include("connectivity.php");
 
 # TICKETS
@@ -75,6 +89,7 @@ function get_select_name($table,$id){
 # USERS
 function AddNewUser(){
 	
+	
 	$name 		= $_REQUEST['name'];
 	$lname		= $_REQUEST['lname'];
 	$email		= $_REQUEST['email'];
@@ -83,17 +98,17 @@ function AddNewUser(){
 	$edit_id    = $_REQUEST['edit_id'];
 	
 	$activationtime = time();
-	if(isset($edit_id)){
-		
+	if($edit_id>0){		
 		mysql_query("UPDATE user SET 
 					name = '".$name."', 
 					lname= '".$lname."',
 					email= '".$email."',
 					password= '".$password."',
 					type= '".$type."' WHERE id = ".$edit_id."");
+		$lastInsertedId  = $edit_id;
 		}
-	else
-	
+	else{
+
 	mysql_query("INSERT INTO `user` (
 				`id` ,
 				`name` ,
@@ -105,9 +120,23 @@ function AddNewUser(){
 				)
 				VALUES (
 				NULL , '".$name."', '".$lname."', '".$email."', '".$password."', '".$type."', '".$activationtime."'
-				);
-				
-				");
+				);");
+	
+	$lastInsertedId = mysql_insert_id();
+	
+	}
+	# SET PERMISION
+	if(isset($lastInsertedId)){
+		# DELETE ALL EXISTING PERMISSION
+		mysql_query("DELETE  FROM user_permission_type_list WHERE user_id='".$lastInsertedId."'");
+		# ADD NEW PERMISION SET
+		foreach($permission=$_POST["permission"] as $values){
+		mysql_query("INSERT INTO user_permission_type_list(id,user_id,user_permission_type_id)VALUES (NULL , $lastInsertedId, $values)");
+
+		}
+	
+	}
+	
 	
 	}
 function get_users_list($id=0){
@@ -158,13 +187,13 @@ function AddNewProject(){
 	
 	if(isset($edit_id)){
 		
-		echo "UPDATE project SET 
+	/*	echo "UPDATE project SET 
 				project_name = '".$project_name."',
 				startdate    = '".$startdate."' ,
 				enddate      = '".$enddate."' ,
 				details      = '".$details."' ,
 				deliverydate = '".$deliverydate."'  WHERE id =".$edit_id."";
-				exit;
+				exit;*/
 		mysql_query("UPDATE project SET 
 				project_name = '".$project_name."',
 				startdate    = '".$startdate."' ,
@@ -204,4 +233,14 @@ function GetProjectDetails(){
 	
 	
 	}	
+	
+# PERMISION
+function GetAllPermissiontype(){
+	return mysql_query("SELECT * FROM user_permission_type");
+	}
+function  GetUserPermisionStatus($userid,$permission){
+	$query = mysql_query("SELECT * FROM user_permission_type_list WHERE user_id	=$userid AND  user_permission_type_id = $permission");
+	return mysql_num_rows($query);
+	}	
+	
 ?>

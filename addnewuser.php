@@ -1,13 +1,15 @@
-<?php 
+<?php
+include('include.php'); 
 include('header.php');
-include('include.php');
+
 #HEADER		
 if(isset($_REQUEST['adduser']))
 AddNewUser();
 
 if((isset($_REQUEST['id']))){
-	$result = GetUserDetails($_REQUEST['id']);
-	$row    = mysql_fetch_object($result);
+	$user_id = $_REQUEST['id'];
+	$result  = GetUserDetails($_REQUEST['id']);
+	$row     = mysql_fetch_object($result);
 }
 ?>
 <form name="srs" method="post">
@@ -15,23 +17,37 @@ if((isset($_REQUEST['id']))){
 
 <!-- ADD NEW USER -->
 <div id="content">
-        <div id="archdev-navbar">
-          <div id="pkglist-about2" class="box">
-            <table align="center">
-            <tr><td height="37" colspan="2"><h2>Add new User</h2></td></tr>
-            <tr><td height="37">First Name</td><td><input type="text" name="name" value="<?php echo $row->name;?>"></td></tr>
-            <tr><td height="37">Last Name</td><td><input type="text" name="lname" value="<?php echo $row->lname;?>"></td></tr>
-            <tr><td height="37">Email</td><td><input type="text" name="email" value="<?php echo $row->email;?>"></td></tr>
-            <tr><td height="37">Password</td><td><input type="text" name="password" value="<?php echo $row->password;?>"></td></tr>
-            
-            <tr><td height="37">Permission Type</td><td><select name="type"><?php echo get_selectbox($row->type,'user_type');?>
-            											
-            </select></td></tr>
-            <tr><td></td><td><input class="button-link" type="submit" name="adduser" value="Mange User"></td></tr>
-            		
-            </table>
-          </div>
-       </div>
+    <div id="archdev-navbar">
+      <div id="pkglist-about2" class="box">
+      <table><tr><td>
+                    <table align="center">
+                    <tr><td height="37" colspan="2"><h2>Add new User</h2></td></tr>
+                    <tr><td height="37">First Name</td><td><input type="text" name="name" value="<?php echo $row->name;?>"></td></tr>
+                    <tr><td height="37">Last Name</td><td><input type="text" name="lname" value="<?php echo $row->lname;?>"></td></tr>
+                    <tr><td height="37">Email</td><td><input type="text" name="email" value="<?php echo $row->email;?>"></td></tr>
+                    <tr><td height="37">Password</td><td><input type="text" name="password" value="<?php echo $row->password;?>"></td></tr>
+                    <tr><td height="37">Permission Type</td><td><select name="type"><?php echo get_selectbox($row->type,'user_type');?>
+                    </select></td></tr>
+                    <tr><td></td><td><input class="button-link" type="submit" name="adduser" value="Mange User"></td></tr>
+                    </table>
+                </td>
+        <td><h2>Set Permission</h2>
+           	<ul>
+					<?php 
+							$result = GetAllPermissiontype();
+							while($row = mysql_fetch_array($result)){
+								if($user_id)
+								$checked = GetUserPermisionStatus($user_id,$row['id']) ?  'checked="checked"' : '' ;
+								echo '<li><input name=permission[] value="'.$row['id'].'" type="checkbox" '.$checked.' />'.$row['name'].'</li>';
+							}
+					 ?>
+               <li>
+             </ul>
+                
+          </td>
+            </tr></table>
+      </div>
+   </div>
        
 <!-- LIST USERS -->       
      <div id="pkglist-results" class="box">
